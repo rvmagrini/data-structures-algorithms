@@ -7,10 +7,30 @@ public class ProductExceptSelf {
     public static void main(String[] args) {
         int[] intArray = new int[] { 1, 2, 3, 4, 5 };
         System.out.println("Array: " + Arrays.toString(intArray));
-        System.out.println("Product Array: " + Arrays.toString(productArrayExceptSelf(intArray)));
+        System.out.println("Find Product Array 1: " + Arrays.toString(findProductArrayExceptSelf1(intArray)));
+        System.out.println("Find Product Array 2: " + Arrays.toString(findProductArrayExceptSelf2(intArray)));
     }
 
-    public static int[] productArrayExceptSelf(int[] array) {
+    public static int[] findProductArrayExceptSelf1(int[] array) {
+        int length = array.length;
+        int[] productArray = new int[length];
+
+        int leftProduct = 1;
+        for (int i=0; i<length; i++) {
+            productArray[i] = leftProduct;
+            leftProduct *= array[i];
+        }
+
+        int rightProduct = 1;
+        for (int i=length-1; i>=0; i--) {
+            productArray[i] *= rightProduct;
+            rightProduct *= array[i];
+        }
+
+        return productArray;
+    }
+
+    public static int[] findProductArrayExceptSelf2(int[] array) {
         int length = array.length;
         int[] leftProduct = new int[length];
         int[] rightProduct = new int[length];
@@ -24,7 +44,7 @@ public class ProductExceptSelf {
         }
 
         for (int i=length-2; i>=0; i--) {
-            rightProduct[i] = array[i+1]  * rightProduct[i+1];
+            rightProduct[i] = array[i+1] * rightProduct[i+1];
         }
 
         for (int i=0; i<length; i++) {
