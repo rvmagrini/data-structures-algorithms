@@ -1,5 +1,7 @@
 package com.rvmagrini.datastructures.stack;
 
+import java.util.EmptyStackException;
+
 public class MyStack<T> {
 
     private ListNode<T> top;
@@ -27,6 +29,32 @@ public class MyStack<T> {
         return length == 0;
     }
 
+    public void push(T value) {
+        ListNode<T> newNode = new ListNode<>(value);
+        newNode.next = top;
+        top = newNode;
+        length++;
+    }
+
+    public T pop() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+
+        T topValue = top.value;
+        top = top.next;
+        length--;
+        return topValue;
+    }
+
+    public T peek() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+
+        return top.value;
+    }
+
     @Override
     public String toString() {
         String toString;
@@ -48,8 +76,17 @@ public class MyStack<T> {
     public static void main(String[] args) {
         MyStack<Integer> myStack = new MyStack<>();
         System.out.println(myStack);
-        myStack.top = new ListNode<>(5);
-        myStack.length++;
+        myStack.push(5);
+        myStack.push(10);
+        myStack.push(20);
+        System.out.println("Pushed: 5, 10, 20");
         System.out.println(myStack);
+        System.out.println("Popped: " + myStack.pop());
+        System.out.println(myStack);
+        System.out.println("Peeked: " + myStack.peek());
+        System.out.println("Popped: " + myStack.pop());
+        System.out.println("Popped: " + myStack.pop());
+        System.out.println(myStack);
+
     }
 }
