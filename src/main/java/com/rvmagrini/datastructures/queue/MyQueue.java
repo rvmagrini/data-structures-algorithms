@@ -1,5 +1,7 @@
 package com.rvmagrini.datastructures.queue;
 
+import java.util.NoSuchElementException;
+
 public class MyQueue<T> {
 
     private ListNode<T> front;
@@ -29,6 +31,50 @@ public class MyQueue<T> {
         return length == 0;
     }
 
+    public void enqueue(T value) {
+        ListNode<T> newNode = new ListNode<>(value);
+
+        if (isEmpty()) {
+            front = newNode;
+        } else {
+            rear.next = newNode;
+        }
+
+        rear = newNode;
+        length++;
+    }
+
+    public T dequeue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+        T dequeued = front.value;
+        front = front.next;
+
+        if (front == null) {
+            rear = null;
+        }
+
+        length--;
+        return dequeued;
+    }
+
+    public T first() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+
+        return front.value;
+    }
+
+    public T last() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is empty");
+        }
+
+        return rear.value;
+    }
+
     @Override
     public String toString() {
         String toString;
@@ -51,11 +97,24 @@ public class MyQueue<T> {
 
         MyQueue<Integer> myQueue = new MyQueue<>();
         System.out.println(myQueue);
-        myQueue.front = new ListNode<>(1);
-        myQueue.rear = new ListNode<>(2);
-        myQueue.front.next = myQueue.rear;
-        myQueue.length = 2;
+
+        // Enqueue
+        System.out.println("Enqueued 1, 2, 3, 4, 5");
+        myQueue.enqueue(1);
+        myQueue.enqueue(2);
+        myQueue.enqueue(3);
+        myQueue.enqueue(4);
+        myQueue.enqueue(5);
         System.out.println(myQueue);
+
+        // Dequeue
+        System.out.println("Dequeued: " + myQueue.dequeue());
+        System.out.println("Dequeued: " + myQueue.dequeue());
+        System.out.println(myQueue);
+
+        // First & Last elements
+        System.out.println("First element: " + myQueue.first());
+        System.out.println("Last element: " + myQueue.last());
 
     }
 
